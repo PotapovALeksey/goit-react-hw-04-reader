@@ -30,7 +30,18 @@ export default class Reader extends Component {
     const { location, history } = this.props;
     const item = getItemFromLocation(location);
 
-    if (!item) history.push('/reader?item=1');
+    if (!item) {
+      history.push('/reader?item=1');
+    }
+  }
+
+  componentDidUpdate() {
+    const { location, history, items } = this.props;
+    const item = getItemFromLocation(location);
+    if (!item || Number(item) > items.length + 1)
+      return history.push('/reader?item=1');
+
+    return null;
   }
 
   handleNext = () => {
